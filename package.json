@@ -2,16 +2,20 @@
   "name": "240629_wetube_clonecoding",
   "version": "1.0.0",
   "description": "The Best way to watch videos",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lifedesigner88/240629_WeTube_Clone.git"
+  },
+  "scripts": {
+    "win": "node index.js"
   },
   "author": "Sejong Park",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/lifedesigner88/240629_WeTube_Clone/issues"
   },
-  "homepage": "https://github.com/lifedesigner88/240629_WeTube_Clone#readme"
+  "homepage": "https://github.com/lifedesigner88/240629_WeTube_Clone#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
-
