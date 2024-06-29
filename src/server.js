@@ -13,7 +13,9 @@ app.get("/", handleHome);
 
 
 const handleLogin = (req, res) => {
-    return res.send("Login Here");
+    return res.send({
+        message: "Login Here"
+    });
 }
 app.get("/login", handleLogin);
 
@@ -24,3 +26,4 @@ app.listen(PORT, handleListening);
 
 
 
+// https://nomadcoders.co/wetube/lectures/2647
