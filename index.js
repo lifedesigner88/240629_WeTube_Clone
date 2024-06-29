@@ -1,1 +1,2 @@
-console.log("Welcome to the C:\Users\LifeD");
+import express from 'express';
+console.log('Express app listening on port');

@@ -7,7 +7,7 @@
     "url": "git+https://github.com/lifedesigner88/240629_WeTube_Clone.git"
   },
   "scripts": {
-    "win": "node index.js"
+    "dev": "babel-node index.js"
   },
   "author": "Sejong Park",
   "license": "MIT",
@@ -17,5 +17,11 @@
   "homepage": "https://github.com/lifedesigner88/240629_WeTube_Clone#readme",
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/node": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "nodemon": "^3.1.4"
   }
 }
