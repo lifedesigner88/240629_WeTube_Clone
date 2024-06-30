@@ -1,22 +1,18 @@
 import express from "express";
 import * as console from "node:console";
 
-
-
-
-
 const PORT = 4000;
 const app = express();
 
+
 import morgan from "morgan";
-const loggerMiddleware = morgan("dev");
+const loggerMiddleware = morgan("dev"); // 컬러풀한 로그 찍어줌
 app.use(loggerMiddleware);
 
 const logger = (req, res, next) => {
     // console.log(`I'm in the middle! : ${req.method} ${req.url}`);
     next();
 }
-
 
 
 const privateMiddleware = (req, res, next) => {
@@ -26,11 +22,6 @@ const privateMiddleware = (req, res, next) => {
         return res.send("<h1> Private Page </h1>");
     next();
 }
-
-const handleHome = (req, res) => {
-    // console.log("I'm in the end!!!");
-    return res.end();
-}
 const handleProtected = (req, res) => {
     console.log("I'm in the protected route!");
     return res.send("<h1> Protected Page </h1>");
@@ -39,7 +30,34 @@ const handleProtected = (req, res) => {
 app.use(logger); // 모든 라우터에서 실행된다.
 app.use(privateMiddleware); // 이것도 실행됨
 
-app.get("/", handleHome);
+
+// Routher
+const globalRouter = express.Router();
+const userRouter = express.Router();
+const videoRouter = express.Router();
+
+app.use("/", globalRouter);
+app.use("/users", userRouter);
+app.use("/videos", videoRouter);
+
+const handleHome = (req, res) => {
+    return res.send("<h1>Home Page</h1>");
+}
+
+const handleEditUser = (req, res) => {
+    return res.send("<h1>Edit User</h1>");
+}
+
+const handleWatchVideo = (req, res) => {
+    return res.send("<h1>Watch Video</h1>");
+}
+
+globalRouter.get('/', handleHome);
+userRouter.get('/edit', handleEditUser);
+videoRouter.get('/watch', handleWatchVideo);
+
+
+// app.get("/", handleHome);
 app.get("/protected", handleProtected) // privateMiddleware 때문에 도달 불가
 
 
