@@ -1,18 +1,26 @@
 import express from "express";
 import * as console from "node:console";
 
+
+
+
+
 const PORT = 4000;
-
-
 const app = express();
 
+import morgan from "morgan";
+const loggerMiddleware = morgan("dev");
+app.use(loggerMiddleware);
+
 const logger = (req, res, next) => {
-    console.log(`I'm in the middle! : ${req.method} ${req.url}`);
+    // console.log(`I'm in the middle! : ${req.method} ${req.url}`);
     next();
 }
 
+
+
 const privateMiddleware = (req, res, next) => {
-    console.log("protected Middleware");
+    // console.log("protected Middleware");
     const url = req.url;
     if (url === "/protected")
         return res.send("<h1> Private Page </h1>");
@@ -20,7 +28,7 @@ const privateMiddleware = (req, res, next) => {
 }
 
 const handleHome = (req, res) => {
-    console.log("I'm in the end!!!");
+    // console.log("I'm in the end!!!");
     return res.end();
 }
 const handleProtected = (req, res) => {
