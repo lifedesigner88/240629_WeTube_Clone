@@ -1,5 +1,7 @@
 import express from "express";
-import * as console from "node:console";
+import globalRouter from "./routers/globalRouter";
+import userRouter from "./routers/userRouter";
+import videoRouter from "./routers/videoRouter";
 
 const PORT = 4000;
 const app = express();
@@ -32,29 +34,11 @@ app.use(privateMiddleware); // 이것도 실행됨
 
 
 // Routher
-const globalRouter = express.Router();
-const userRouter = express.Router();
-const videoRouter = express.Router();
 
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 
-const handleHome = (req, res) => {
-    return res.send("<h1>Home Page</h1>");
-}
-
-const handleEditUser = (req, res) => {
-    return res.send("<h1>Edit User</h1>");
-}
-
-const handleWatchVideo = (req, res) => {
-    return res.send("<h1>Watch Video</h1>");
-}
-
-globalRouter.get('/', handleHome);
-userRouter.get('/edit', handleEditUser);
-videoRouter.get('/watch', handleWatchVideo);
 
 
 // app.get("/", handleHome);
