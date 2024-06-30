@@ -19,3 +19,5 @@ export const upload = (req, res) => {
 export const deleteVideo = (req, res) => {
     return res.send("<h1> delete Videos </h1>");
 }
+
+// https://nomadcoders.co/wetube/lectures/2661
