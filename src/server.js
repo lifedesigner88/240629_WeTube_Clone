@@ -1,6 +1,4 @@
 import express from "express";
-import * as url from "node:url";
-import res from "express/lib/response";
 import * as console from "node:console";
 
 const PORT = 4000;
@@ -53,5 +51,3 @@ const handleListening = () =>
 app.listen(PORT, handleListening);
 
 
-
-// https://nomadcoders.co/wetube/lectures/2647
