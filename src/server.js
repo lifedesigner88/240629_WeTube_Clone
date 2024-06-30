@@ -34,7 +34,6 @@ app.use(privateMiddleware); // 이것도 실행됨
 
 
 // Routher
-
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);

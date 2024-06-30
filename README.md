@@ -1,13 +1,17 @@
+#Wetube 
+
 / -> home
 /join -> Join
 /login -> Login
 /serach -> Search
 
-/users/edit
-/users/delete
+/users/:id -> See User
+/users/logout -> Log Out
+/users/edit -> Edit MY Profile
+/users/remove -> Delete MY Profile
 
-/videos/watch
-/videos/edit
-/videos/delete
-/videos/comments
-/videos/comments/delete
+/videos/:id -> See Video
+/videos/:id/edit -> Edit Video
+/videos/:id/delete -> Delete Video
+
+/videos/upload -> Upload Video
