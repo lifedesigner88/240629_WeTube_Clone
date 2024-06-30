@@ -19,8 +19,6 @@ const privateMiddleware = (req, res, next) => {
     next();
 }
 
-
-
 const handleHome = (req, res) => {
     console.log("I'm in the end!!!");
     return res.end();
@@ -29,7 +27,6 @@ const handleProtected = (req, res) => {
     console.log("I'm in the protected route!");
     return res.send("<h1> Protected Page </h1>");
 }
-
 
 app.use(logger); // 모든 라우터에서 실행된다.
 app.use(privateMiddleware); // 이것도 실행됨
