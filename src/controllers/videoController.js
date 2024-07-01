@@ -1,5 +1,5 @@
 export const trending = (req, res) => {
-    return res.send("<h1> Home Page Videos </h1>");
+    return res.render("home");
 }
 export const see = (req, res) => {
         console.log(req.params);
@@ -23,4 +23,3 @@ export const deleteVideo = (req, res) => {
     return res.send("<h1> delete Videos </h1>");
 }
 
-// https://nomadcoders.co/wetube/lectures/2661
