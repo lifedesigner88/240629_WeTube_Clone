@@ -2,12 +2,10 @@ export const trending = (req, res) => {
     return res.render("home");
 }
 export const see = (req, res) => {
-        console.log(req.params);
-    return res.send("<h1> Watch Videos </h1>");
+    return res.render("watch");
 }
 export const edit = (req, res) => {
-    console.log(req.params);
-    return res.send("<h1> Edit Videos </h1>");
+    return res.render("edit");
 }
 
 export const search = (req, res) => {
