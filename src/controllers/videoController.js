@@ -1,5 +1,13 @@
+const fakeUser = {
+    username: "Sejong Park",
+    loggedIn: false,
+}
+
 export const trending = (req, res) => {
-    return res.render("home", {pageTitle: "Home"});
+    return res.render("home", {
+        pageTitle: "Home",
+        fakeUser
+    });
 }
 export const see = (req, res) => {
     return res.render("watch");
