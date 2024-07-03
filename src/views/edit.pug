@@ -2,4 +2,7 @@ extends base
 
 
 block content
-    h1 Edit !
+    h4 Change title of video
+    form(action=`edit`, method="POST")
+        input(name="title", placeHolder="Video Title", value=video.title, required)
+        input(value="Save", type="submit")
