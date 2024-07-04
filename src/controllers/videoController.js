@@ -32,10 +32,8 @@ const videosObject = [
 ];
 
 export const trending = (req, res) => {
-
     return res.render("home", {
         pageTitle: "Home",
-        fakeUser,
         videosObject
     });
 }
@@ -44,7 +42,6 @@ export const watch = (req, res) => {
     const video = videosObject[videoId - 1];
     return res.render("watch", {
         pageTitle: `Watching ${video.title}`,
-        fakeUser,
         video
     });
 }
@@ -53,17 +50,30 @@ export const getEdit = (req, res) => {
     const video = videosObject[videoId - 1];
     return res.render("edit", {
         pageTitle: `Editing ${video.title}`,
-        fakeUser,
         video,
     });
 }
-
 export const postEdit = (req, res) => {
-
+    const {videoId} = req.params;
+    const {title} = req.body;
+    videosObject[videoId - 1].title = title;
+    return res.redirect(`/videos/${videoId}`)
 }
-
-export const upload = (req, res) => {
-    return res.send("<h1> upLoad Videos </h1>");
+export const getUpload = (req, res) => {
+    return res.render("upload", {
+        pageTitle: "Upload Video",
+    });
 }
-
-// https://nomadcoders.co/wetube/lectures/2684
+export const postUpload = (req, res) => {
+    const {title} = req.body;
+    const newVideo = {
+        title,
+        rating: 0,
+        comments: 0,
+        createdAt: "Just Now",
+        views: 0,
+        id: videosObject.length + 1
+    };
+    videosObject.push(newVideo);
+    return res.redirect("/");
+}

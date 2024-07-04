@@ -2,12 +2,12 @@ import express from "express";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import morgan from "morgan";
 
 const PORT = 4000;
 const app = express();
 
 
-import morgan from "morgan";
 const loggerMiddleware = morgan("dev"); // 컬러풀한 로그 찍어줌
 app.use(loggerMiddleware);
 
@@ -35,12 +35,14 @@ app.set("views", process.cwd() + "/src/views"); // 기본 디렉토리 변경
 app.use(logger); // 모든 라우터에서 실행된다.
 app.use(privateMiddleware); // 이것도 실행됨
 
+// form 데이터를 제이슨 형테로 번역하는 설정
+app.use(express.urlencoded({extended: true}));
+
 
 // Routher
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
-
 
 
 // app.get("/", handleHome);
