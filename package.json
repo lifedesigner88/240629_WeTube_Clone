@@ -17,6 +17,7 @@
   "homepage": "https://github.com/lifedesigner88/240629_WeTube_Clone#readme",
   "dependencies": {
     "express": "^4.19.2",
+    "mongoose": "^8.4.4",
     "morgan": "^1.10.0",
     "pug": "^3.0.3"
   },
