@@ -3,11 +3,17 @@ import mongoose from 'mongoose';
 const videoSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 8,
+        maxlength: 20,
     },
     description: {
         type: String,
         required: true,
+        trim: true,
+        minlength: 10,
+        maxlength: 140,
     },
     createAt: {
         type: Date,

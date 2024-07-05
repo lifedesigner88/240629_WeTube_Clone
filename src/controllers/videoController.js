@@ -36,10 +36,6 @@ export const postUpload = async (req, res) => {
         title,
         description,
         hashtags: hashtags.split(",").map(word => `#${word}`),
-        meta: {
-            views: 0,
-            rating: 0,
-        },
     })
     try {
         await video.save();
