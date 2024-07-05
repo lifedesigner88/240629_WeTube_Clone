@@ -1,5 +1,5 @@
 import express from "express";
-import {getEdit, postEdit, upload, watch, getUpload, postUpload} from "../controllers/videoController"
+import {getEdit, postEdit, watch, getUpload, postUpload} from "../controllers/videoController"
 
 
 // videos

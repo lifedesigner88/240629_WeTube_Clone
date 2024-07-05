@@ -1,14 +1,10 @@
-import "./db"
-import Video from "./models/Video";
 import express from "express";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import morgan from "morgan";
 
-const PORT = 4000;
 const app = express();
-
 
 const loggerMiddleware = morgan("dev"); // 컬러풀한 로그 찍어줌
 app.use(loggerMiddleware);
@@ -30,7 +26,6 @@ const handleProtected = (req, res) => {
     console.log("I'm in the protected route!");
     return res.send("<h1> Protected Page </h1>");
 }
-
 
 app.set("view engine", "pug"); // Html helper
 app.set("views", process.cwd() + "/src/views"); // 기본 디렉토리 변경
@@ -58,9 +53,7 @@ const handleLogin = (req, res) => {
 }
 app.get("/login", handleLogin);
 
+export default app;
 
-const handleListening = () =>
-    console.log(` ✅  Server Listenting on Port http://localhost:${PORT} 🚀`);
-app.listen(PORT, handleListening);
 
 
