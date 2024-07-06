@@ -8,21 +8,43 @@ export const trending = async (req, res) => {
         return res.render("home", {error: error.message})
     }
 }
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
     const {videoId} = req.params;
+    const video = await Video.findById(videoId);
+    if (!video)
+        return res.render("404", {
+            pageTitle: " ❌ Video Not Found"
+        });
     return res.render("watch", {
-        pageTitle: `Wathing `,
+        pageTitle: video.title,
+        video
     });
 }
-export const getEdit = (req, res) => {
+export const getEdit = async (req, res) => {
     const {videoId} = req.params;
+    const video = await Video.findById(videoId);
+    if (!video)
+        return res.render("404", {
+            pageTitle: " ❌ Video Not Found"
+        });
     return res.render("edit", {
-        pageTitle: `Editing `,
+        pageTitle: `Editing ${video.title} `,
+        video
     });
 }
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
+    const {title, description, hashtags} = req.body;
     const {videoId} = req.params;
-    const {title} = req.body;
+    const video = await Video.findById(videoId);
+    if (!video)
+        return res.render("404", {
+            pageTitle: " ❌ Video Not Found"
+        });
+    video.title = title;
+    video.description = description;
+    video.hashtags = hashtags.split(",")
+        .map(word => word.startsWith('#') ? word : `#${word}`)
+    await video.save();
     return res.redirect(`/videos/${videoId}`)
 }
 export const getUpload = (req, res) => {
