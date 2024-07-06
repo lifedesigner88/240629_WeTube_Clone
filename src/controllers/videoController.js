@@ -24,7 +24,7 @@ export const postUpload = async (req, res) => {
 // Read
 export const trending = async (req, res) => {
     try {
-        const videos = await Video.find({});
+        const videos = await Video.find({}).sort({createAt: "desc"});
         return res.render("home", {
             pageTitle: "Home",
             videos
@@ -62,6 +62,21 @@ export const watch = async (req, res) => {
         video
     });
 }
+export const search = async (req, res) => {
+    const {keyword} = req.query;
+    let videos = [];
+    if (keyword) {
+        videos = await Video.find({
+            title: {
+                $regex: new RegExp(keyword, "i")
+            }
+        });
+    }
+    return res.render("search", {
+        pageTitle: "Search",
+        videos
+    })
+}
 
 // Update
 export const postEdit = async (req, res) => {
@@ -83,6 +98,6 @@ export const postEdit = async (req, res) => {
 // Delete
 export const deleteVideo = async (req, res) => {
     const {videoId} = req.params;
-    await Video.findByIdAndDelete( videoId);
+    await Video.findByIdAndDelete(videoId);
     return res.redirect("/");
 }
