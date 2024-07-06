@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import * as console from "node:console";
 
 const videoSchema = new mongoose.Schema({
     title: {
@@ -33,6 +34,10 @@ const videoSchema = new mongoose.Schema({
         },
     },
 });
+
+videoSchema.pre('save', async function () {
+    console.log("We are about to save: ",this);
+})
 
 const Video = mongoose.model('Video', videoSchema);
 export default Video;
