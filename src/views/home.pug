@@ -4,7 +4,7 @@ include mixins/video
 block content
     h1 Welcome here you will see the trening videos
     ul
-        each videoObject in videosObject
-            +video(videoObject)
+        each video in videos
+            +video(video)
         else
             li="Sorry"

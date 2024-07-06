@@ -24,8 +24,11 @@ export const postUpload = async (req, res) => {
 // Read
 export const trending = async (req, res) => {
     try {
-        const videosObject = await Video.find({});
-        return res.render("home", {pageTitle: "Home", videosObject})
+        const videos = await Video.find({});
+        return res.render("home", {
+            pageTitle: "Home",
+            videos
+        })
     } catch (error) {
         return res.render("home", {error: error.message})
     }
@@ -75,4 +78,11 @@ export const postEdit = async (req, res) => {
         hashtags: Video.formatHashtags(hashtags),
     })
     return res.redirect(`/videos/${videoId}`)
+}
+
+// Delete
+export const deleteVideo = async (req, res) => {
+    const {videoId} = req.params;
+    await Video.findByIdAndDelete( videoId);
+    return res.redirect("/");
 }
