@@ -1,6 +1,8 @@
 extends base
 
 block content
+    if errorMessage
+        span=errorMessage
     form(method="POST")
         input(
             name="name",
@@ -15,7 +17,7 @@ block content
             required
         )
         input(
-            name="userName",
+            name="username",
             type="text",
             placeholder="UserName",
             required

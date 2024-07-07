@@ -5,18 +5,31 @@ export const getJoin = (req, res) => {
     return res.render("join");
 }
 export const postJoin = async (req, res) => {
-    console.log(req.body);
+    const pageTitle = "join"
     const {
         name,
         email,
-        userName,
+        username,
         password,
         location
     } = req.body;
+
+    if (await User.exists({username}))
+        return res.render("join", {
+            pageTitle,
+            errorMessage: "User name already exists"
+        })
+
+    if (await User.exists({email}))
+        return res.render("join", {
+            pageTitle,
+            errorMessage: "Email already exists"
+        })
+
     await User.create({
         name,
         email,
-        userName,
+        username,
         password,
         location
     })
