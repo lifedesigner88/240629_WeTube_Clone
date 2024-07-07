@@ -1,5 +1,5 @@
 import express from "express";
-import globalRouter from "./routers/globalRouter";
+import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import morgan from "morgan";
@@ -37,7 +37,7 @@ app.use(express.urlencoded({extended: true}));
 
 
 // Routher
-app.use("/", globalRouter);
+app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 
