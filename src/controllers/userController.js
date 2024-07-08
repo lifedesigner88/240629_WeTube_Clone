@@ -1,6 +1,8 @@
 import User from '../models/User';
 import {name} from "pug";
+import bcrypt from "bcrypt";
 
+// Join
 export const getJoin = (req, res) => {
     return res.render("join");
 }
@@ -16,46 +18,70 @@ export const postJoin = async (req, res) => {
         location
     } = req.body;
 
-    if(password !== password2)
-        return res.render("join", {
+    if (password !== password2)
+        return res.status(404).render("join", {
             pageTitle,
             errorMessage: "Password confirmation does not match"
         })
 
     if (await User.exists({$or: [{username}, {email}]}))
-        return res.render("join", {
+        return res.status(404).render("join", {
             pageTitle,
             errorMessage: "User name or Email already exists"
         });
 
-    await User.create({
-        name,
-        email,
-        username,
-        password,
-        location
-    })
-    return res.redirect('/login');
+    try {
+        await User.create({
+            name,
+            email,
+            username,
+            password,
+            location
+        })
+        return res.redirect('/login');
+    } catch (e) {
+        return res.status(404).render("join", {
+            pageTitle,
+            errorMessage: e._message
+        });
+    }
 }
 
-export const edit = (req, res) => {
-    return res.send("<h1> Edit User </h1>");
-}
-
-export const remove = (req, res) => {
-    return res.send("<h1> Remove User </h1>");
+// Login
+export const getLogin = (req, res) => {
+    return res.render("login", {pageTitle: "Login"});
 };
+export const postLogin = async (req, res) => {
+    const {username, password} = req.body;
+    const user = await User.findOne({username})
+    if(!user)
+        return res.status(400).render("login", {
+            pageTitle: "Login", errorMessage: "username Does not exists"
+        });
+    const ok = await bcrypt.compare(password, user.password);
+    if (!ok)
+        return res.status(400).render("login", {
+            pageTitle: "Login",
+            errorMessage: "Wrong password",
+        })
 
-export const login = (req, res) => {
-    return res.send("<h1> Login </h1>");
+    return res.end();
 };
 
 
 export const logout = (req, res) => {
     return res.send("<h1> Logout </h1>");
 };
-
 export const see = (req, res) => {
     return res.send("<h1> See </h1>");
 };
 
+// Update
+export const edit = (req, res) => {
+    return res.send("<h1> Edit User </h1>");
+}
+
+// Delete
+export const remove = (req, res) => {
+    return res.send("<h1> Remove User </h1>");
+};
