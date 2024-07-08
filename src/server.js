@@ -43,6 +43,23 @@ app.use(
     })
 )
 
+app.use((req, res, next) => {
+    console.log("🍪", req.headers.cookie);
+    next();
+})
+app.use((req, res, next) => {
+    req.sessionStore.all((error, session) => {
+        console.log(session);
+        next();
+    })
+})
+
+app.get("/add-one", (req, res, next) => {
+    req.session.potato +=1;
+    return res.send(`${req.session.id} ${req.session.potato}`);
+})
+
+
 // Routher
 app.use("/", rootRouter);
 app.use("/users", userRouter);
