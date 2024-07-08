@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -34,7 +35,13 @@ app.use(privateMiddleware); // 이것도 실행됨
 
 // form 데이터를 제이슨 형테로 번역하는 설정
 app.use(express.urlencoded({extended: true}));
-
+app.use(
+    session({
+        secret: "Hello!",
+        resave: true,
+        saveUninitialized: true,
+    })
+)
 
 // Routher
 app.use("/", rootRouter);
