@@ -1,10 +1,11 @@
 import express from "express";
 import session from "express-session";
+import morgan from "morgan";
+import {localsMiddleware} from "./middlewares";
+import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
-import morgan from "morgan";
-import {localsMiddleware} from "./middlewares";
 
 const app = express();
 
@@ -39,8 +40,13 @@ app.use(express.urlencoded({extended: true}));
 app.use(
     session({
         secret: "Hello!",
-        resave: true,
-        saveUninitialized: true,
+        resave: false,
+        saveUninitialized: false, // 로그인 할때만 세션발급 (false)
+        cookie: {
+            maxAge: 30 * 60 * 60 * 1000
+        },
+        store: MongoStore
+            .create({mongoUrl: process.env.MONGODB_URI})
     })
 )
 app.use(localsMiddleware);
