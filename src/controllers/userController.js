@@ -89,3 +89,6 @@ export const edit = (req, res) => {
 export const remove = (req, res) => {
     return res.send("<h1> Remove User </h1>");
 };
+
+
+// https://nomadcoders.co/wetube/lectures/2711

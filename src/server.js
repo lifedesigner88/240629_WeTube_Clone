@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import express from "express";
 import session from "express-session";
 import morgan from "morgan";
@@ -39,7 +41,7 @@ app.use(privateMiddleware); // 이것도 실행됨
 app.use(express.urlencoded({extended: true}));
 app.use(
     session({
-        secret: "Hello!",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false, // 로그인 할때만 세션발급 (false)
         cookie: {
