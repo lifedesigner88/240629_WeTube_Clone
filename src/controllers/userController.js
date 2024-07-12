@@ -1,6 +1,9 @@
 import User from '../models/User';
 import {name} from "pug";
 import bcrypt from "bcrypt";
+import * as console from "node:console";
+import req from "express/lib/request";
+import res from "express/lib/response";
 
 // Join
 export const getJoin = (req, res) => {
@@ -119,8 +122,7 @@ export const finishGithubLogin = async (req, res) => {
     const params = new URLSearchParams(config).toString();
 
     try {
-
-        // Access Token 요청
+        // 1️⃣ Access Token 요청
         const accessTokenUrl = `${baseUrl}?${params}`;
         const response = await fetch(accessTokenUrl, {
             method: 'POST',
@@ -131,7 +133,7 @@ export const finishGithubLogin = async (req, res) => {
         const data = await response.json();
         const access_token = data.access_token;
 
-        // Access Token 으로 유저 정보 요청
+        // 2️⃣ Access Token 으로 유저 정보 요청
         const apiUrl = "https://api.github.com";
         const userData = await fetch(`${apiUrl}/user`, {
             headers: {
@@ -140,6 +142,44 @@ export const finishGithubLogin = async (req, res) => {
         });
         const userJson = await userData.json();
         console.log("😊", userJson);
+
+        // 3️⃣ Access Token 으로 email 정보 요청
+        const emailData = await fetch(`${apiUrl}/user/emails`, {
+            headers: {
+                Authorization: `token ${access_token}`
+            }
+        });
+        const emailJson = await emailData.json();
+        console.log("📨", emailJson);
+
+        // 4️⃣ email 의 소유자가 검증된 이메일 추출
+        const emailObj = emailJson
+            .find(email =>
+                email.primary === true &&
+                email.verified === true
+            );
+        if (!emailObj) return res.redirect("/login");
+
+        // 5️⃣ 검증된 이메일이 등록된 이메일이라면 로그인하고 없으면 계정 생성
+        const existingUser = await User.findOne({ email: emailObj.email });
+        console.log("❤️",existingUser);
+        if (existingUser) {
+            req.session.loggedIn = true;
+            req.session.user = existingUser;
+            return res.redirect("/");
+        } else {
+            const newUser = await User.create({
+                email: emailObj.email,
+                username: userJson.login,
+                password: "",
+                socialOnly: true,
+                name: userJson.name,
+                location: userJson.location,
+            });
+            req.session.loggedIn = true;
+            req.session.user = newUser;
+            return res.redirect("/");
+        }
 
     } catch (error) {
         console.log("Github OAuth Error", error);

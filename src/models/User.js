@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+    socialOnly: {
+        type: Boolean,
+    },
     username: {
         type: String,
         unique: true,
@@ -14,7 +17,6 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
     },
     name: {
         type: String,
