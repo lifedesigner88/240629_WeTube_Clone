@@ -39,6 +39,7 @@ export const postJoin = async (req, res) => {
             email,
             username,
             password,
+            socialOnly: false,
             location
         })
         return res.redirect('/login');
@@ -56,7 +57,7 @@ export const getLogin = (req, res) => {
 };
 export const postLogin = async (req, res) => {
     const {username, password} = req.body;
-    const user = await User.findOne({username})
+    const user = await User.findOne({username, socialOnly: false})
     if (!user)
         return res.status(400).render("login", {
             pageTitle: "Login", errorMessage: "username Does not exists"
@@ -161,14 +162,10 @@ export const finishGithubLogin = async (req, res) => {
         if (!emailObj) return res.redirect("/login");
 
         // 5️⃣ 검증된 이메일이 등록된 이메일이라면 로그인하고 없으면 계정 생성
-        const existingUser = await User.findOne({ email: emailObj.email });
-        console.log("❤️",existingUser);
-        if (existingUser) {
-            req.session.loggedIn = true;
-            req.session.user = existingUser;
-            return res.redirect("/");
-        } else {
-            const newUser = await User.create({
+        let user = await User.findOne({ email: emailObj.email });
+        console.log("❤️",user);
+        if (!user)
+            user = await User.create({
                 email: emailObj.email,
                 username: userJson.login,
                 password: "",
@@ -176,10 +173,9 @@ export const finishGithubLogin = async (req, res) => {
                 name: userJson.name,
                 location: userJson.location,
             });
-            req.session.loggedIn = true;
-            req.session.user = newUser;
-            return res.redirect("/");
-        }
+        req.session.loggedIn = true;
+        req.session.user = user;
+        return res.redirect("/");
 
     } catch (error) {
         console.log("Github OAuth Error", error);
