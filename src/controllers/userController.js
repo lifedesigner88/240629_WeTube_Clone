@@ -77,7 +77,7 @@ export const postLogin = async (req, res) => {
 
 
 export const logout = (req, res) => {
-    req.session.loggedIn = false;
+    req.session.destroy();
     return res.redirect("/");
 };
 export const see = (req, res) => {
@@ -168,6 +168,7 @@ export const finishGithubLogin = async (req, res) => {
             user = await User.create({
                 email: emailObj.email,
                 username: userJson.login,
+                avatarUrl: userJson.avatarUrl,
                 password: "",
                 socialOnly: true,
                 name: userJson.name,
