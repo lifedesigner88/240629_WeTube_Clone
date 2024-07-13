@@ -2,12 +2,10 @@ import User from '../models/User';
 import {name} from "pug";
 import bcrypt from "bcrypt";
 import * as console from "node:console";
-import req from "express/lib/request";
-import res from "express/lib/response";
 
 // Join
 export const getJoin = (req, res) => {
-    return res.render("join");
+    return res.render("join", {pageTitle: "Join"});
 }
 export const postJoin = async (req, res) => {
     const pageTitle = "join"
@@ -85,8 +83,42 @@ export const see = (req, res) => {
 };
 
 // Update
-export const edit = (req, res) => {
-    return res.send("<h1> Edit User </h1>");
+export const getEdit = (req, res) => {
+    return res.render("edit-profile", {
+        pageTitle: "Edit Profile",
+    })
+}
+export const postEdit = async (req, res) => {
+
+    const {
+        session: {
+            user: {
+                _id: userId
+            }
+        },
+        body: {
+            name,
+            email,
+            username,
+            location,
+        }
+    } = req;
+
+    console.log("❤️", userId);
+
+    // 세션 유저정보 업데이트
+    req.session.user = await User.findByIdAndUpdate(
+        userId,
+        {
+            name,
+            email,
+            username,
+            location,
+        },
+        {new: true} // 업데이트된 정보 리턴
+    );
+
+    return res.redirect("/users/edit");
 }
 
 // Delete
@@ -162,8 +194,8 @@ export const finishGithubLogin = async (req, res) => {
         if (!emailObj) return res.redirect("/login");
 
         // 5️⃣ 검증된 이메일이 등록된 이메일이라면 로그인하고 없으면 계정 생성
-        let user = await User.findOne({ email: emailObj.email });
-        console.log("❤️",user);
+        let user = await User.findOne({email: emailObj.email});
+        console.log("❤️", user);
         if (!user)
             user = await User.create({
                 email: emailObj.email,
