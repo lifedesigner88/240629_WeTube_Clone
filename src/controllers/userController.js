@@ -2,8 +2,9 @@ import User from '../models/User';
 import {name} from "pug";
 import bcrypt from "bcrypt";
 import * as console from "node:console";
+import user from "../models/User";
 
-// Join
+// Create
 export const getJoin = (req, res) => {
     return res.render("join", {pageTitle: "Join"});
 }
@@ -120,11 +121,56 @@ export const postEdit = async (req, res) => {
 
     return res.redirect("/users/edit");
 }
+export const getChangePassword = (req, res) => {
+    if (req.session.user.socialOnly === true)
+        return res.redirect("/");
+    return res.render("users/change-password", {
+        pageTitle: "Change Password",
+    })
+}
+
+export const postChangePassword = async (req, res) => {
+
+    const {
+        session: {
+            user: {
+                _id: userId,
+                password,
+            },
+        },
+        body: {
+            oldPassword,
+            newPassword,
+            newPasswordCheck,
+        }
+    } = req;
+
+    const ok = await bcrypt.compare(oldPassword, password);
+
+    if (!ok)
+        return res.status(400).render("users/change-password", {
+            pageTitle : "Change Password",
+            errorMessage: "The current password is incorrect"
+        });
+
+    if (newPassword !== newPasswordCheck)
+        return res.status(400).render("users/change-password", {
+            pageTitle : "Change Password",
+            errorMessage: "The Password does not match"
+        });
+
+    const user = await User.findById(userId);
+    user.password = newPassword;
+    await user.save();
+
+    return res.redirect("/users/logout");
+}
 
 // Delete
 export const remove = (req, res) => {
     return res.send("<h1> Remove User </h1>");
 };
+
 
 require('dotenv').config()
 
@@ -140,7 +186,6 @@ export const startGithubLogin = (req, res) => {
     const githubLoginUrl = `${baseUrl}?${params}`;
     return res.redirect(githubLoginUrl);
 }
-
 export const finishGithubLogin = async (req, res) => {
 
     const {code} = req.query;
