@@ -2,7 +2,6 @@ import User from '../models/User';
 import {name} from "pug";
 import bcrypt from "bcrypt";
 import * as console from "node:console";
-import user from "../models/User";
 
 // Create
 export const getJoin = (req, res) => {
@@ -94,7 +93,8 @@ export const postEdit = async (req, res) => {
     const {
         session: {
             user: {
-                _id: userId
+                _id: userId,
+                avatarUrl
             }
         },
         body: {
@@ -102,15 +102,17 @@ export const postEdit = async (req, res) => {
             email,
             username,
             location,
-        }
+        },
+        file
     } = req;
 
-    console.log("❤️", userId);
+    console.log("file📁", file)
 
     // 세션 유저정보 업데이트
     req.session.user = await User.findByIdAndUpdate(
         userId,
         {
+            avatarUrl: file ? file.path : avatarUrl,
             name,
             email,
             username,
@@ -148,13 +150,13 @@ export const postChangePassword = async (req, res) => {
 
     if (!ok)
         return res.status(400).render("users/change-password", {
-            pageTitle : "Change Password",
+            pageTitle: "Change Password",
             errorMessage: "The current password is incorrect"
         });
 
     if (newPassword !== newPasswordCheck)
         return res.status(400).render("users/change-password", {
-            pageTitle : "Change Password",
+            pageTitle: "Change Password",
             errorMessage: "The Password does not match"
         });
 
@@ -244,7 +246,7 @@ export const finishGithubLogin = async (req, res) => {
             user = await User.create({
                 email: emailObj.email,
                 username: userJson.login,
-                avatarUrl: userJson.avatarUrl,
+                avatarUrl: userJson.avatar_url,
                 password: "",
                 socialOnly: true,
                 name: userJson.name,

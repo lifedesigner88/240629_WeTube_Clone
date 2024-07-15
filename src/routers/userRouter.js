@@ -1,5 +1,5 @@
 import express from "express";
-import {protectorMiddleware, publicOnlyMiddleware} from "../middlewares"
+import {protectorMiddleware, publicOnlyMiddleware, uploadFiles} from "../middlewares"
 import {
     finishGithubLogin,
     getChangePassword,
@@ -20,8 +20,7 @@ userRouter.get("/logout", protectorMiddleware, logout);
 userRouter.route('/edit')
     .all(protectorMiddleware)
     .get(getEdit)
-    .post(postEdit);
-
+    .post(uploadFiles.single('avatar'), postEdit);
 
 userRouter.route('/change-password')
     .all(protectorMiddleware)
