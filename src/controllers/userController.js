@@ -263,4 +263,4 @@ export const finishGithubLogin = async (req, res) => {
 }
 
 
-// https://nomadcoders.co/wetube/lectures/2731
+// https://nomadcoders.co/wetube/lectures/2726

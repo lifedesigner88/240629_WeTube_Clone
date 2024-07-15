@@ -53,8 +53,7 @@ app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
-
-
+app.use("/uploads", express.static("uploads"));
 app.get("/protected", handleProtected) // privateMiddleware 때문에 도달 불가
 
 
