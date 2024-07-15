@@ -130,7 +130,6 @@ export const getChangePassword = (req, res) => {
 }
 
 export const postChangePassword = async (req, res) => {
-
     const {
         session: {
             user: {
@@ -260,3 +259,6 @@ export const finishGithubLogin = async (req, res) => {
         return res.redirect("/login")
     }
 }
+
+
+// https://nomadcoders.co/wetube/lectures/2731

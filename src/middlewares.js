@@ -15,3 +15,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     if (!req.session.loggedIn) return next();
     return res.redirect("/");
 }
+
+export const uploadFiles = multer({dest: "uploads/"});
