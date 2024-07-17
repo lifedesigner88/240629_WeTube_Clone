@@ -73,13 +73,23 @@ export const postLogin = async (req, res) => {
     return res.redirect("/");
 };
 
-
+// Read
 export const logout = (req, res) => {
     req.session.destroy();
     return res.redirect("/");
 };
-export const see = (req, res) => {
-    return res.send("<h1> See </h1>");
+export const see = async (req, res) => {
+    const {id: userId} = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).render("404", {
+        pageTitle: "Not found",
+    });
+
+    return res.render("users/profile", {
+        pageTitle: `${user.name}`,
+        user
+    });
 };
 
 // Update
@@ -130,7 +140,6 @@ export const getChangePassword = (req, res) => {
         pageTitle: "Change Password",
     })
 }
-
 export const postChangePassword = async (req, res) => {
     const {
         session: {
@@ -263,4 +272,3 @@ export const finishGithubLogin = async (req, res) => {
 }
 
 
-// https://nomadcoders.co/wetube/lectures/2726E

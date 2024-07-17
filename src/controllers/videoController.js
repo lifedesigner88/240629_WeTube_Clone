@@ -3,10 +3,17 @@ import Video from "../models/Video"
 
 // Create
 export const postUpload = async (req, res) => {
+
+    const {
+        user: {
+            _id: userId
+        },
+    } = req.session;
+
     const {title, description, hashtags} = req.body;
-    console.log("❤️", req.file);
     const video = new Video({
         title,
+        owner: userId,
         fileUrl: req.file.path,
         description,
         hashtags: Video.formatHashtags(hashtags),
