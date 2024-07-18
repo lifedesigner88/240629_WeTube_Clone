@@ -1,7 +1,11 @@
 extends base
 
 block content
-    img(src="/" + loggedInUser.avatarUrl, width="400", height="300")
+    if loggedInUser.avatarUrl
+        if loggedInUser.avatarUrl.includes("http")
+            img(src=loggedInUser.avatarUrl, width="400", height="300")
+        else
+            img(src="/" + loggedInUser.avatarUrl, width="400", height="300")
     form(method="POST", enctype="multipart/form-data")
         label(for="avater") Avatar
         input(

@@ -1,4 +1,5 @@
 import Video from "../models/Video"
+import User from "../models/User";
 
 
 // Create
@@ -20,6 +21,11 @@ export const postUpload = async (req, res) => {
     })
     try {
         await video.save();
+
+        const uploadUser = await User.findById(userId);
+        uploadUser.videos.push(video._id);
+        uploadUser.save();
+
         return res.redirect("/");
     } catch (e) {
         console.error(e);
