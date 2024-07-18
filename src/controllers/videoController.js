@@ -60,6 +60,7 @@ export const getEdit = async (req, res) => {
         return res.render("404", {
             pageTitle: " ❌ Video Not Found"
         });
+    checkOwner(video, req, res);
     return res.render("edit", {
         pageTitle: `Editing ${video.title} `,
         video
@@ -104,6 +105,7 @@ export const postEdit = async (req, res) => {
         return res.render("404", {
             pageTitle: " ❌ Video Not Found"
         });
+    checkOwner(video, req, res);
     await Video.findByIdAndUpdate(videoId, {
         title,
         description,
@@ -115,6 +117,20 @@ export const postEdit = async (req, res) => {
 // Delete
 export const deleteVideo = async (req, res) => {
     const {videoId} = req.params;
+    const video = await Video.findById(videoId);
+    if (!video)
+        return res.render("404", {
+            pageTitle: " ❌ Video Not Found"
+        });
+    checkOwner(video, req, res);
     await Video.findByIdAndDelete(videoId);
     return res.redirect("/");
+}
+
+
+
+const checkOwner = (video, req, res) => {
+    const userId = req.session.user._id;
+    if(String(video.owner) !== String(userId))
+        return res.status(403).redirect("/");
 }
