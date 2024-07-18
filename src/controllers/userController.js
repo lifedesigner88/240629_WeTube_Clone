@@ -2,6 +2,7 @@ import User from '../models/User';
 import {name} from "pug";
 import bcrypt from "bcrypt";
 import * as console from "node:console";
+import Video from "../models/Video";
 
 // Create
 export const getJoin = (req, res) => {
@@ -86,9 +87,12 @@ export const see = async (req, res) => {
         pageTitle: "Not found",
     });
 
+    const videos = await Video.find({owner: userId})
+
     return res.render("users/profile", {
         pageTitle: `${user.name}`,
-        user
+        user,
+        videos
     });
 };
 

@@ -65,6 +65,3 @@ const handleLogin = (req, res) => {
 app.get("/login", handleLogin);
 
 export default app;
-
-
-
