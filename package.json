@@ -7,8 +7,8 @@
     "url": "git+https://github.com/lifedesigner88/240629_WeTube_Clone.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.config.js"
+    "server": "nodemon",
+    "front": "webpack"
   },
   "author": "Sejong Park",
   "license": "MIT",

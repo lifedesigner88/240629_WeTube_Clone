@@ -11,6 +11,7 @@ module.exports = {
     output: {
         filename: "js/main.js",
         path: path.resolve(__dirname, "assets"),
+        clean:true, // 빌드시 폴더 삭제후 다시 빌드.
     },
     module: {
         rules: [
