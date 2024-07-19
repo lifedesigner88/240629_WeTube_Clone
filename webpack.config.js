@@ -20,6 +20,13 @@ module:{
                     ]
                 }
             }
+        },
+        {
+            test: /\.scss$/,
+            use: {
+                loader
+            }
         }
     ]
 }
+

@@ -1,7 +1,3 @@
-const hello = async () => {
-    alert("Hello World!");
-    const x = await fetch("");
-}
-hello();
+import "../scss/style.scss";
 
-
+alert("Hello World!");
