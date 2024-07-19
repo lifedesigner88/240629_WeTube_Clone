@@ -7,6 +7,7 @@ module.exports = {
         filename: "css/style.css",
     })],
     mode: "development",
+    watch: true,
     output: {
         filename: "js/main.js",
         path: path.resolve(__dirname, "assets"),
@@ -18,13 +19,21 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: [["@babel/preset-env", {targets: "defaults"}]],
+                        presets: [
+                            ["@babel/preset-env", {
+                                targets: "defaults"
+                            }]
+                        ],
                     },
                 },
             },
             {
                 test: /\.scss$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "sass-loader"
+                ],
             },
         ],
     },
