@@ -91,7 +91,7 @@ export const search = async (req, res) => {
             title: {
                 $regex: new RegExp(keyword, "i")
             }
-        });
+        }).populate("owner");
     }
     return res.render("search", {
         pageTitle: "Search",
@@ -131,9 +131,8 @@ export const deleteVideo = async (req, res) => {
 }
 
 
-
 const checkOwner = (video, req, res) => {
     const userId = req.session.user._id;
-    if(String(video.owner) !== String(userId))
+    if (String(video.owner) !== String(userId))
         return res.status(403).redirect("/");
 }
