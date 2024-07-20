@@ -12,6 +12,8 @@ block content
             type="submit"
             value="Search Now"
         )
-    each video in videos
-        +video(video)
-
+    div.video__grid
+        each video in videos
+            +video(video)
+        else
+            span.empty__message No videos found

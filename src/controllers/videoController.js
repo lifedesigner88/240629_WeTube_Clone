@@ -39,7 +39,10 @@ export const postUpload = async (req, res) => {
 // Read
 export const trending = async (req, res) => {
     try {
-        const videos = await Video.find({}).sort({createAt: "desc"});
+        const videos = await Video
+            .find({})
+            .populate("owner")
+            .sort({createAt: "desc"});
         return res.render("home", {
             pageTitle: "Home",
             videos
