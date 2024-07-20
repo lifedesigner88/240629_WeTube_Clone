@@ -2,9 +2,19 @@ extends base
 include mixins/video
 
 block content
-    h1 Welcome here you will see the trening videos
-    ul
+    div.home__videos
         each video in videos
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
+            +video(video)
             +video(video)
         else
             li="Sorry"
