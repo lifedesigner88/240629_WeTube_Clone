@@ -7,3 +7,10 @@
   gap: 50px;
   grid-template-columns: repeat(4, 1fr);
 }
+.auth-switch {
+  text-align: center;
+  margin-top: 15px;
+  a {
+    text-decoration: underline;
+  }
+}
