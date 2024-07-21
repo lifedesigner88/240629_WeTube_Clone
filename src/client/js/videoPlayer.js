@@ -8,12 +8,12 @@ const totalTime = document.getElementById("totalTime");
 
 video.volume = volumeRange.value;
 
-const handlePlayClick = (e) => {
+const handlePlayClick = () => {
     if (video.paused) video.play();
     else video.pause();
 }
 
-const handleMute = (e) => {
+const handleMute = () => {
     video.muted = !video.muted;
     muteBtn.innerText = video.muted ? "Unmute" : "Mute";
     volumeRange.value = video.muted ? 0 : video.volume;
@@ -24,13 +24,13 @@ const handleVolumeChange = (event) => {
     if (video.muted) handleMute();
 }
 
-const handleLoadedMetaData = (event) => {
+const handleLoadedMetaData = () => {
     totalTime.innerText =
         new Date(video.duration * 1000)
             .toISOString()
             .substring(14, 19);
 }
-const handleTimeUpdate = (event) => {
+const handleTimeUpdate = () => {
     currentTime.innerText = msToTime(video.currentTime);
 }
 
