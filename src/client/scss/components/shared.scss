@@ -2,15 +2,34 @@
   margin: 50px;
   text-align: center;
 }
+
 .video__grid {
   display: grid;
   gap: 50px;
   grid-template-columns: repeat(4, 1fr);
 }
+
 .auth-switch {
   text-align: center;
   margin-top: 15px;
+
   a {
     text-decoration: underline;
   }
+}
+
+.avartar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.avartar__small {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.mb5 {
+  margin-bottom: 50px;
 }

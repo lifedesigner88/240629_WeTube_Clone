@@ -1,13 +1,14 @@
 extends base
 
 block content
-    if loggedInUser.avatarUrl
-        if loggedInUser.avatarUrl.includes("http")
-            img(src=loggedInUser.avatarUrl, width="400", height="300")
-        else
-            img(src="/" + loggedInUser.avatarUrl, width="400", height="300")
+
     form(method="POST", enctype="multipart/form-data")
-        label(for="avater") Avatar
+        label(for="avater")
+            if loggedInUser.avatarUrl
+                if loggedInUser.avatarUrl.includes("http")
+                    img(src=loggedInUser.avatarUrl, width="400", height="300").avartar.profile__data
+                else
+                    img(src="/" + loggedInUser.avatarUrl, width="400", height="300").avartar.profile__data
         input(
             id="avater"
             type="file"
@@ -48,4 +49,4 @@ block content
         )
         if !loggedInUser.socialOnly
             hr
-            a(href="change-password") Change Paswrod &rAarr;
+            a(href="change-password").edit-profile__password Change Paswrod &rarr;

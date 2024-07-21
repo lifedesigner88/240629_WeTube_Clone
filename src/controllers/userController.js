@@ -2,7 +2,6 @@ import User from '../models/User';
 import {name} from "pug";
 import bcrypt from "bcrypt";
 import * as console from "node:console";
-import Video from "../models/Video";
 
 // Create
 export const getJoin = (req, res) => {
@@ -84,7 +83,12 @@ export const see = async (req, res) => {
 
     const user = await User
         .findById(userId)
-        .populate("videos");
+        .populate({
+            path: "videos",
+            populate: {
+                path: "owner"
+            }
+        });
     if (!user) return res.status(404).render("404", {
         pageTitle: "Not found",
     });

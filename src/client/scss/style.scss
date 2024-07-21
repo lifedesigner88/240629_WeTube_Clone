@@ -12,6 +12,8 @@
 
 // Screens
 @import "screens/search";
+@import "screens/profile";
+@import "screens/edit-profile";
 
 a {
   color: inherit;
@@ -25,7 +27,7 @@ body {
 }
 
 main {
-  margin: 60px auto 0 auto ;
+  margin: 60px auto 0 auto;
   max-width: 1200px;
   width: 100%;
 }
